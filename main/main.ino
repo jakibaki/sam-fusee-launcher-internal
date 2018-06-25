@@ -208,6 +208,8 @@ void sleep(int errorCode) {
   digitalWrite(ONBOARD_LED, LOW);
   if (errorCode == 1) {
     setLedColor("black"); //led to off
+  } else if(errorCode == -2) {
+    setLedColor("orange");
   } else {
     setLedColor("red"); //led to red
     delayMicroseconds(RCM_STRAP_TIME_us);
@@ -253,6 +255,10 @@ void wakeup(){
   // First, we set the RCM_STRAP low
   pinMode(RCM_STRAP_PIN, OUTPUT);
   digitalWrite(RCM_STRAP_PIN, LOW);
+  if(!digitalRead(WAKEUP_PIN)){
+    pinMode(RCM_STRAP_PIN, INPUT);
+    sleep(-2);
+  }
   setLedColor("green");
   // Wait a second (I tried to reduce this but 1 second is good)
   delayMicroseconds(RCM_STRAP_TIME_us);
