@@ -266,6 +266,7 @@ void setup()
 {
   // This continues after the reset after a wakeup
   // Set RCM_STRAP as an input to "stealth" any funny business on the RCM_STRAP
+  while(1) {
   pinMode(RCM_STRAP_PIN, INPUT);
 
   strip.begin();
@@ -277,7 +278,6 @@ void setup()
 #endif
 
   if (usbInitialized == -1) sleep(-1);
-
   DEBUG_PRINTLN("Ready! Waiting for Tegra...");
   bool blink = true;
   int currentTime = 0;
@@ -326,9 +326,9 @@ void setup()
   usb.ctrlReq(tegraDeviceAddress, 0, USB_SETUP_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_INTERFACE,
               0x00, 0x00, 0x00, 0x00, 0x7000, 0x7000, usbWriteBuffer, NULL);
   DEBUG_PRINTLN("Done!");
-
+  foundTegra = false;
+  }
   sleep(1);
-  SCB->AIRCR = ((0x5FA << SCB_AIRCR_VECTKEY_Pos) | SCB_AIRCR_SYSRESETREQ_Msk); //full software reset
 
 }
 
