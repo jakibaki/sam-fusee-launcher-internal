@@ -6,6 +6,7 @@
                                    // -= NOTE: THIS MUST BE PIN 4!!! =-
 #define RCM_STRAP_PIN 3            // Solder to pin 10 on joycon rail
 #define RCM_STRAP_TIME_us 1000000  // Amount of time to hold RCM_STRAP low and then launch payload
+#define DELAY_AFTER_SUCCESS 3000000
 #define ONBOARD_LED 13
 #define LED_CONFIRM_TIME_us 500000 // How long to show red or green light for success or fail
 
@@ -327,6 +328,8 @@ void setup()
               0x00, 0x00, 0x00, 0x00, 0x7000, 0x7000, usbWriteBuffer, NULL);
   DEBUG_PRINTLN("Done!");
   foundTegra = false;
+  delayMicroseconds(DELAY_AFTER_SUCCESS);
+
   }
   sleep(1);
 
